@@ -8,4 +8,5 @@
 
 int isNumber(std::string str);
 void parse(std::vector<int>& vec, std::deque<int>& dq, int ac, char **av);
+void printMe(std::string name, std::vector<int> vec);
 #endif

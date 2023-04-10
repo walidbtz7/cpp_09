@@ -1,5 +1,15 @@
 #include "PmergeMe.hpp"
 
+void printMe(std::string name, std::vector<int> vec)
+{
+    std::cout << name << ": ";
+    for (size_t i = 0; i < vec.size(); i++)
+    {
+        std::cout << vec[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
 int isNumber(std::string str)
 {
     for (int i = 0; str[i]; i++)
@@ -37,3 +47,28 @@ void parse(std::vector<int>& vec, std::deque<int>& dq, int argc, char **argv)
 	}
 }
 
+template<typename T>
+T InsertSort(T& vector)
+{
+    for (size_t i = 1; i < vector.size(); ++i) {
+        for (size_t j = i; j > 0 && vector[j] < vector[j-1]; --j) {
+            std::swap(vector[j], vector[j-1]);
+        }
+    }
+    return vector;
+}
+
+
+template<typename T>
+void MergeInsertSort(T& vector)
+{
+    if (vector.size() <= 5)
+        return InsertSort(vector);
+    size_t mid = vector.size() / 2;
+    T left(vector.begin(), vector.begin() + mid);
+    T right(vector.begin() + mid, vector.end());
+    MergeSort(left);
+    MergeSort(right);
+    vector.clear();
+    std::merge(left.begin(), left.end(), right.begin(), right.end(), std::back_inserter(vector));
+}

@@ -27,7 +27,14 @@ int isNumber(std::string str)
 
 void removeSpaces(std::string &str)
 {
-    str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
+    std::size_t first = str.find_first_not_of(' ');
+    if (first == std::string::npos) {
+        return;
+    }
+
+    std::size_t last = str.find_last_not_of(' ');
+
+    str.substr(first, last - first + 1);
 }
 
 void checkMap(std::map<std::string, float> &map)
@@ -67,6 +74,7 @@ void init_data(std::string filename, std::map<std::string, float> &map)
     std::string key;
     std::string value;
     std::ifstream file(filename);
+    char *tmp;
 
     if (!file.is_open())
     {
@@ -83,7 +91,12 @@ void init_data(std::string filename, std::map<std::string, float> &map)
     {
         get_row(line, key, value, ',');
         if (key != "" && value != "")
-            map[key] = strtod(value.c_str(), NULL); 
+            map[key] = strtod(value.c_str(), &tmp);
+        if (tmp[0] != '\0')
+        {
+            std::cout << "Error: bad input => " << value << std::endl;
+            exit(1);
+        }
         line.clear();
         std::getline(file, line);
     }
@@ -123,6 +136,8 @@ int check_date(std::string date)
 
 void format(std::string &key, std::string &value, std::map<std::string, float> &data)
 {
+    char *tmp;
+
     if (value.empty())
     {
         std::cout << "Error: bad input => " << key << std::endl;
@@ -138,7 +153,12 @@ void format(std::string &key, std::string &value, std::map<std::string, float> &
         std::cout << "Error: bad date => " << key << std::endl;
         return ;
     }
-    double val = strtod(value.c_str(), NULL);
+    double val = strtod(value.c_str(), &tmp);
+    if (tmp[0] != '\0')
+    {
+        std::cout << "Error: bad input => " << value << std::endl;
+        return ;
+    }
     if (val < 0)
     {
         std::cout << "Error: not a positive number." << std::endl;

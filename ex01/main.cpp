@@ -1,21 +1,21 @@
 #include "RPN.hpp"
 
 int main(int argc, char* argv[]) {
-    std::string input = argv[1];
     std::stack<int> stack;
-    std::stringstream ss(input);
-    std::string token;
+    int b, a;
     parsing(argc, argv);
-
-    while (std::getline(ss, token, ' ')) {
-        if (isNumber(token)) {
-            stack.push(std::stoi(token));
-        } else {
-            int b = stack.top();
+    for (int i = 0; argv[1][i]; i++) {
+        if (isdigit(argv[1][i]) || argv[1][i] == ' ') {
+            if (isdigit(argv[1][i]))
+                stack.push(argv[1][i] - '0');
+        } 
+        else if (stack.size() > 1)
+        {
+            b = stack.top();
             stack.pop();
-            int a = stack.top();
+            a = stack.top();
             stack.pop();
-            switch (token[0]) {
+            switch (argv[1][i]) {
                 case '+': stack.push(a + b); break;
                 case '-': stack.push(a - b); break;
                 case '*': stack.push(a * b); break;
@@ -33,6 +33,11 @@ int main(int argc, char* argv[]) {
                     return (1);
                 }
             }
+        }
+        else
+        {
+            std::cout << "Error: invalid input" << std::endl;
+            return (1);
         }
     }
     if (stack.size() != 1) {

@@ -22,13 +22,7 @@ void parsing(int argc, char* argv[]) {
     for (int i = 0; i < (int) input.size(); i++) {
         char c = input[i];
         if (std::isdigit(c)) {
-        {
             num_digits++;
-            if (std::isdigit(input[i + 1])) {
-                std::cerr << "Error: Number must be less then 10!\n";
-                std::exit(1);
-            }
-        }
         } else if (c == '/' || c == '*' || c == '-' || c == '+') {
             num_ops++;
         } else if (!std::isspace(c)) {
