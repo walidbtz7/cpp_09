@@ -18,7 +18,6 @@ int main(int argc, char **argv)
     if (argc == 2)
     {
         init_data("data.csv", data);
-        //displayMap(data);
         format_input(argv[1], data); 
     }
 }

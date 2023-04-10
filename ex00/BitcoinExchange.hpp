@@ -14,5 +14,4 @@
 
 void init_data(std::string filename, std::map<std::string, float> &map);
 void format_input(std::string input, std::map<std::string, float> &map);
-
 #endif
