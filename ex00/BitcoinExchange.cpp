@@ -29,11 +29,13 @@ void removeSpaces(std::string &str)
 {
     std::size_t first = str.find_first_not_of(' ');
     if (first == std::string::npos) {
-        return;
+        first = 0;
     }
 
     std::size_t last = str.find_last_not_of(' ');
-
+    if (last == std::string::npos) {
+        last = str.size() - 1;
+    }
     str.substr(first, last - first + 1);
 }
 
@@ -140,33 +142,33 @@ void format(std::string &key, std::string &value, std::map<std::string, float> &
 
     if (value.empty())
     {
-        std::cout << "Error: bad input => " << key << std::endl;
+        std::cerr << "Error: bad input => " << key << std::endl;
         return ;
     }
     else if (key.empty())
     {
-        std::cout << "Error: bad input => " << value << std::endl;
+        std::cerr << "Error: bad input => " << value << std::endl;
         return ;
     }
     else if (check_date(key) == 0)
     {
-        std::cout << "Error: bad date => " << key << std::endl;
+        std::cerr << "Error: bad date => " << key << std::endl;
         return ;
     }
     double val = strtod(value.c_str(), &tmp);
     if (tmp[0] != '\0')
     {
-        std::cout << "Error: bad input => " << value << std::endl;
+        std::cerr << "Error: bad input => " << value << std::endl;
         return ;
     }
     if (val < 0)
     {
-        std::cout << "Error: not a positive number." << std::endl;
+        std::cerr << "Error: not a positive number." << std::endl;
         return ;
     }
     else if (val > 1000)
     {
-        std::cout << "Error: too large a number.." << std::endl;
+        std::cerr << "Error: too large a number.." << std::endl;
         return ;
     }
     else 
@@ -180,7 +182,7 @@ void format(std::string &key, std::string &value, std::map<std::string, float> &
                 std::cout << key <<" => " << val <<" = "<< it->second *  val << std::endl;
         }
         else 
-            std::cout << "Error: no data found "<< std::endl;
+            std::cerr << "Error: no data found "<< std::endl;
     }
     
 }
@@ -193,7 +195,7 @@ void format_input(std::string input, std::map<std::string, float> &data)
 
     if (!file.is_open())
     {
-        std::cout << "Error: could not open file." << std::endl;
+        std::cerr << "Error: could not open file." << std::endl;
         exit(1);
     }
     std::getline(file, line);

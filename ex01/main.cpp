@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
                 case '*': stack.push(a * b); break;
                 case '/':
                     if (b == 0) {
-                       std::cout << "Error: division by zero" << std::endl;
+                       std::cerr << "Error: division by zero" << std::endl;
                        return (1);
                     }
                     stack.push(a / b);
@@ -29,19 +29,19 @@ int main(int argc, char* argv[]) {
                 case '%': stack.push(a % b); break;
                 default:
                 {
-                    std::cout << "Error: invalid operator" << std::endl;
+                    std::cerr << "Error: invalid operator" << std::endl;
                     return (1);
                 }
             }
         }
         else
         {
-            std::cout << "Error: invalid input" << std::endl;
+            std::cerr << "Error: invalid input" << std::endl;
             return (1);
         }
     }
     if (stack.size() != 1) {
-        std::cout << "Error: invalid input" << std::endl;
+        std::cerr << "Error: invalid input" << std::endl;
         return (1);
     }
     std::cout << stack.top() << std::endl;
